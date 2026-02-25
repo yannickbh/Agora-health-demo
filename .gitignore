@@ -1,0 +1,29 @@
+# ── Environment & Secrets ──
+.env
+
+# ── Python ──
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.venv/
+venv/
+env/
+
+# ── Debug files ──
+debug.py
+
+# ── IDE ──
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# ── OS ──
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ── Misc ──
+*.log

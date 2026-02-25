@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Assistente Hospitalar — Powered by Agora</title>
+  <link rel="stylesheet" href="static/css/styles.css" />
+  <script src="https://download.agora.io/sdk/release/AgoraRTC_N.js"></script>
+</head>
+
+<body>
+
+  <header>
+    <div class="logo">🏥</div>
+    <div>
+      <h1>Assistente Hospitalar</h1>
+      <p>Suporte ao paciente por voz — disponível 24h por dia, 7 dias por semana</p>
+    </div>
+    <div class="agora-badge">⚡ Powered by Agora ConvoAI</div>
+  </header>
+
+  <main>
+    <!-- ── Painel de Voz ── -->
+    <div class="card voice-panel">
+      <div class="avatar-ring" id="avatarRing">🤖</div>
+      <div class="agent-name">Assistente de Atendimento</div>
+      <div class="agent-sub">Pergunte qualquer coisa sobre nossos serviços hospitalares</div>
+
+      <div class="status-badge" id="statusBadge">
+        <div class="dot"></div>
+        <span id="statusText">Pronto para conectar</span>
+      </div>
+
+      <div class="btn-group">
+        <button id="btn-start" onclick="startSession()">🎙️ Iniciar Chamada</button>
+        <button id="btn-stop" onclick="stopSession()">⏹ Encerrar Chamada</button>
+      </div>
+
+      <div style="width:100%;max-width:420px">
+        <div class="card" style="padding:16px; border-radius:10px">
+          <div style="font-size:13px; font-weight:600; color:var(--muted); margin-bottom:8px">📋 Atividade</div>
+          <div id="log">
+            <div class="entry"><span class="ts">--:--</span><span>Aguardando sessão...</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Barra Lateral ── -->
+    <div class="sidebar">
+      <div class="card">
+        <h2>💬 Perguntas Frequentes</h2>
+        <ul class="faq-list">
+          <li><span>📅</span>Como agendar uma consulta?</li>
+          <li><span>🚨</span>Quando devo ir ao pronto-socorro?</li>
+          <li><span>💳</span>Quais convênios são aceitos?</li>
+          <li><span>💰</span>Vocês oferecem parcelamento?</li>
+          <li><span>📄</span>Como solicito meu prontuário?</li>
+          <li><span>🕐</span>Quais são os horários de visita?</li>
+          <li><span>💊</span>Como renovo minha receita?</li>
+          <li><span>🔬</span>Quanto tempo levam os resultados de exames?</li>
+          <li><span>🔒</span>Como minhas informações são protegidas?</li>
+          <li><span>🧠</span>Vocês oferecem serviços de saúde mental?</li>
+        </ul>
+      </div>
+
+      <div class="tip-box">
+        <strong>ℹ️ Como funciona</strong>
+        Clique em <strong>Iniciar Chamada</strong> e fale naturalmente. O agente de IA irá
+        responder suas perguntas usando nossa base de conhecimento com
+        <strong>50 perguntas frequentes</strong>. Em caso de emergência, ligue sempre para
+        <strong>192 (SAMU)</strong> ou <strong>193 (Bombeiros)</strong>.
+      </div>
+
+      <div class="card" style="padding:16px">
+        <div style="font-size:13px; font-weight:600; color:var(--muted); margin-bottom:10px">🏥 Ramais Diretos</div>
+        <div style="display:flex;flex-direction:column;gap:8px;font-size:13px">
+          <div>📞 Central: <strong>(11) 3000-1000</strong></div>
+          <div>🚑 SAMU: <strong>192</strong></div>
+          <div>💳 Faturamento: <strong>(11) 3000-2000</strong></div>
+          <div>📄 Prontuários: <strong>(11) 3000-3300</strong></div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer>Assistente Hospitalar &nbsp;|&nbsp; Agora ConvoAI Demo &nbsp;|&nbsp; Em caso de emergência, ligue 192 (SAMU)
+  </footer>
+
+  <script src="static/js/app.js"></script>
+</body>
+
+</html>
