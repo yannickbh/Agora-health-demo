@@ -118,16 +118,22 @@ async def start_agent(req: StartRequest):
 
 @router.post("/stop/{channel}")
 async def stop_agent(channel: str):
-    agent_id = active_agents.pop(channel, None)
+    agent_id = active_agents.get(channel)
     if not agent_id:
         raise HTTPException(404, f"No active agent on channel '{channel}'")
 
     async with httpx.AsyncClient(timeout=10) as client:
-        resp = await client.post(
-            f"{get_convoai_base_url()}/agents/{agent_id}/leave", headers=get_convoai_headers()
-        )
-        resp.raise_for_status()
+        try:
+            resp = await client.post(
+                f"{get_convoai_base_url()}/agents/{agent_id}/leave", headers=get_convoai_headers()
+            )
+            resp.raise_for_status()
+        except httpx.RequestError as e:
+            raise HTTPException(status_code=500, detail=f"Network error stopping agent: {str(e)}")
+        except httpx.HTTPStatusError as e:
+            raise HTTPException(status_code=500, detail=f"Agora API error stopping agent: {str(e)}")
 
+    active_agents.pop(channel, None)
     return {"status": "stopped", "agent_id": agent_id}
 
 def get_active_agents():
