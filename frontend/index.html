@@ -32,6 +32,11 @@
         <span id="statusText">Pronto para conectar</span>
       </div>
 
+      <div id="use-case-wrapper" style="display:none; flex-direction:column; align-items:center; gap:6px; width:100%; max-width:320px">
+        <label for="use-case-select" style="font-size:12px; color:var(--muted); font-weight:600">CASO DE USO</label>
+        <select id="use-case-select" style="width:100%; padding:10px 14px; border-radius:10px; border:1px solid var(--border); font-size:14px; color:var(--text); background:var(--card); cursor:pointer"></select>
+      </div>
+
       <div class="btn-group">
         <button id="btn-start" onclick="startSession()">🎙️ Iniciar Chamada</button>
         <button id="btn-stop" onclick="stopSession()">⏹ Encerrar Chamada</button>

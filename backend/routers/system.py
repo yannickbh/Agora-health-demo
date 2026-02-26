@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 from ..config import get_settings
 from ..services.agora import generate_rtc_token
-from .agent import get_active_agents
+from .agent import get_active_agents, list_use_cases
 
 router = APIRouter()
 
@@ -14,6 +14,10 @@ def get_user_token(channel: str, uid: int):
 def get_public_config():
     settings = get_settings()
     return {"agora_app_id": settings.AGORA_APP_ID}
+
+@router.get("/use_cases")
+def get_use_cases():
+    return {"use_cases": list_use_cases()}
 
 @router.get("/status")
 def status():

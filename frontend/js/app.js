@@ -3,22 +3,47 @@ const API_BASE = ""; // Relative to same origin
 const CHANNEL = "hospital-support";
 const USER_UID = Math.floor(Math.random() * 90000) + 10000;
 
-let APP_ID = ""; // Fetched dynamically
+let APP_ID = "";
+let SELECTED_USE_CASE = "hospital";
 let client, localTrack;
 
 // Initialization
 document.addEventListener("DOMContentLoaded", async () => {
     try {
-        const res = await fetch(`${API_BASE}/config`);
-        if (!res.ok) throw new Error("Failed to load config");
-        const data = await res.json();
-        APP_ID = data.agora_app_id;
+        const [configRes, ucRes] = await Promise.all([
+            fetch(`${API_BASE}/config`),
+            fetch(`${API_BASE}/use_cases`),
+        ]);
+        if (!configRes.ok) throw new Error("Failed to load config");
+        const configData = await configRes.json();
+        APP_ID = configData.agora_app_id;
+
+        if (ucRes.ok) {
+            const ucData = await ucRes.json();
+            populateUseCases(ucData.use_cases || []);
+        }
+
         log("Configuração carregada. UID do usuário: " + USER_UID, "ok");
     } catch (e) {
         log("Falha ao carregar config.", "err");
         console.error("Failed to load config", e);
     }
 });
+
+function populateUseCases(useCases) {
+    const select = document.getElementById("use-case-select");
+    if (!select || useCases.length === 0) return;
+    select.innerHTML = "";
+    useCases.forEach(uc => {
+        const opt = document.createElement("option");
+        opt.value = uc.id;
+        opt.textContent = uc.name;
+        select.appendChild(opt);
+    });
+    SELECTED_USE_CASE = select.value;
+    select.addEventListener("change", () => { SELECTED_USE_CASE = select.value; });
+    document.getElementById("use-case-wrapper").style.display = "flex";
+}
 
 // ── Logging ─────────────────────────────────────────────────
 function log(msg, type = "") {
@@ -112,7 +137,7 @@ async function startSession() {
         const startResp = await fetch(`${API_BASE}/start`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ channel: CHANNEL, user_uid: USER_UID }),
+            body: JSON.stringify({ channel: CHANNEL, user_uid: USER_UID, use_case: SELECTED_USE_CASE }),
         });
 
         const startData = await startResp.json();
